@@ -7,6 +7,7 @@ App = {
         await App.loadAccount()
         await App.loadContract()
         await App.render()
+        // await App.todoList.createTask("Test Task")
     },
 
     loadWeb3: async () => {
@@ -74,6 +75,14 @@ App = {
           window.location.reload()
       },
 
+      toggleCompleted: async(e) => {
+          console.log("hola")
+          App.setLoading(true)
+          const taskId = e.target.name
+          await App.todoList.toggleCompleted(taskId)
+          window.location.reload()
+      },
+
       renderTasks: async() => {
          const taskCount = await App.todoList.taskCount()
          const $taskTemplate = $('.taskTemplate')
@@ -91,6 +100,7 @@ App = {
              .prop('name', taskId)
              .prop('checked', taskCompleted)
             //  .prop('click', App.toggleCompleted)
+             .prop('click', () => console.log('hola'))
 
             if(taskCompleted) {
                 $('#completedTaskList').append($newTaskTemplate)
